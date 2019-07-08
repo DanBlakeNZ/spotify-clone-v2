@@ -4,6 +4,7 @@ import { createBrowserHistory } from "history";
 import LoginPage from "../components/LoginPage";
 import NotFoundPage from "../components/NotFoundPage";
 import BrowsePage from "../components/BrowsePage";
+import { PrivateRoute } from "./PrivateRoute";
 
 export const history = createBrowserHistory();
 
@@ -12,7 +13,7 @@ const AppRouter = () => (
     <div>
       <Switch>
         <Route path="/" component={LoginPage} exact={true} />
-        <Route path="/browse" component={BrowsePage} />
+        <PrivateRoute path="/browse" component={BrowsePage} />
         <Route component={NotFoundPage} />
       </Switch>
     </div>
