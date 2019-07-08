@@ -12,7 +12,7 @@ const port = process.env.PORT || 3000;
 const stateKey = "spotify_auth_state";
 const client_id = process.env.CLIENT_ID;
 const client_secret = process.env.CLIENT_SECRET;
-const redirect_uri = "http://localhost:3000/api/callback"; //TODO: needs to work in production + Spotify Developers
+const redirect_uri = "https://spotify-clone-dblakenz.herokuapp.com/api/callback"; //TODO: needs to work in production + Spotify Developers
 
 const generateRandomString = function(length) {
   let text = "",
@@ -77,7 +77,7 @@ app.get("/api/callback", function(req, res) {
         });
         res.cookie("refreshToken", refresh_token);
 
-        res.redirect("http://localhost:8080/browse");
+        res.redirect("https://spotify-clone-dblakenz.herokuapp.com/browse");
       } else {
         console.log(error); //TODO: Handle this error
       }
