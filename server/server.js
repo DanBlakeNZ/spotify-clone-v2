@@ -87,7 +87,7 @@ app.get("/api/callback", function(req, res) {
         });
         res.cookie("refreshToken", refresh_token);
 
-        res.redirect("https://spotify-clone-dblakenz.herokuapp.com/browse");
+        res.redirect(callback_url);
       } else {
         console.log(error); //TODO: Handle this error
       }
