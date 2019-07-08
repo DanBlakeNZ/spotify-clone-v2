@@ -1,11 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import AppRouter, { history } from "./routers/AppRouter";
+
 import "normalize.css";
 
-const jsx = (
-  <div>
-    <p>Spotify Clone</p>
-  </div>
-);
-
-ReactDOM.render(jsx, document.getElementById("app"));
+ReactDOM.render(<AppRouter />, document.getElementById("app"));
