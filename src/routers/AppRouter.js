@@ -5,6 +5,7 @@ import LoginPage from "../components/LoginPage";
 import NotFoundPage from "../components/NotFoundPage";
 import BrowsePage from "../components/BrowsePage";
 import { PrivateRoute } from "./PrivateRoute";
+import LoginSuccess from "../components/LoginSuccess";
 
 export const history = createBrowserHistory();
 
@@ -13,6 +14,7 @@ const AppRouter = () => (
     <div>
       <Switch>
         <Route path="/" component={LoginPage} exact={true} />
+        <Route path="/loginsuccess" component={LoginSuccess} />
         <PrivateRoute path="/browse" component={BrowsePage} />
         <Route component={NotFoundPage} />
       </Switch>

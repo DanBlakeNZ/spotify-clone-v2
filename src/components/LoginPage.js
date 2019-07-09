@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 
-const env = process.env.NODE_ENV || "dev";
+const env = process.env.NODE_ENV || "development";
+const baseurl = env === "development" ? "http://localhost:3000" : "https://spotify-clone-dblakenz.herokuapp.com";
 
 class LoginPage extends Component {
   render() {
-    let loginUrl =
-      env === "dev" ? "http://localhost:3000/api/login" : "https://spotify-clone-dblakenz.herokuapp.com/api/login";
+    const handleLogin = () => {
+      window.open(baseurl + "/api/login", "_blank", "width=520, height=500");
+    };
 
     return (
       <div>
-        <button>
-          <a href={loginUrl}>Please login to begin</a>
+        <button onClick={handleLogin}>
+          <p>Please login to begin</p>
         </button>
       </div>
     );

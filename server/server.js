@@ -13,8 +13,9 @@ const stateKey = "spotify_auth_state";
 const client_id = process.env.CLIENT_ID;
 const client_secret = process.env.CLIENT_SECRET;
 
-const env = process.env.NODE_ENV || "dev";
+const env = process.env.NODE_ENV || "development";
 let redirect_uri, callback_url;
+const baseurl = env === "development" ? "http://localhost:3000" : "https://spotify-clone-dblakenz.herokuapp.com";
 
 const generateRandomString = length => {
   let text = "",
@@ -27,9 +28,8 @@ const generateRandomString = length => {
 };
 
 const setRedirectUrls = () => {
-  redirect_uri =
-    env === "dev" ? "http://localhost:3000/api/callback" : "https://spotify-clone-dblakenz.herokuapp.com/api/callback";
-  callback_url = env === "dev" ? "http://localhost:8080/browse" : "https://spotify-clone-dblakenz.herokuapp.com/browse";
+  redirect_uri = baseurl + "/api/callback";
+  callback_url = baseurl + "/loginsuccess";
 };
 
 setRedirectUrls();
