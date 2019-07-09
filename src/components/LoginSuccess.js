@@ -4,7 +4,7 @@ class LoginSuccess extends Component {
   componentDidMount() {
     setTimeout(() => {
       window.close();
-    }, 2000);
+    }, 100);
   }
   render() {
     return (

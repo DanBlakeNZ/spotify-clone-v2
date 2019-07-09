@@ -23,7 +23,7 @@ class LoginPage extends Component {
         .then(data => {
           this.setState({
             accessToken: data.access_token,
-            refreshToken: refreshToken,
+            refreshToken: data.refreshToken || refreshToken,
             isLoggedIn: true
           });
         });
@@ -32,7 +32,22 @@ class LoginPage extends Component {
 
   render() {
     const handleLogin = () => {
-      window.open(baseurl + "/api/login", "_blank", "width=520, height=500");
+      let win = window.open(baseurl + "/api/login", "_blank", "width=520, height=500");
+      let timer = setInterval(() => {
+        if (win.closed) {
+          onLoginSuccess();
+          clearInterval(timer);
+        }
+      }, 100);
+    };
+
+    const onLoginSuccess = () => {
+      let { refreshToken, accessToken } = Cookies.get();
+      this.setState({
+        accessToken,
+        refreshToken,
+        isLoggedIn: true
+      });
     };
 
     const handleLogOut = () => {
@@ -46,7 +61,7 @@ class LoginPage extends Component {
       });
       setTimeout(() => {
         win.close();
-      }, 2000);
+      }, 3000);
     };
 
     return (
