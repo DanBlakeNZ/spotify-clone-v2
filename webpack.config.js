@@ -7,7 +7,7 @@ module.exports = env => {
   const isProduction = env === "production";
   return {
     stats: "errors-only",
-    entry: "./src/index.js",
+    entry: "./src/app.js",
     output: {
       path: path.resolve(__dirname, "public", "dist"),
       filename: "bundle.js"
