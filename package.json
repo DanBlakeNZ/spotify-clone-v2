@@ -23,6 +23,7 @@
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "history": "^4.9.0",
+    "js-cookie": "^2.2.0",
     "normalize.css": "^8.0.1",
     "path": "^0.12.7",
     "querystring": "^0.2.0",

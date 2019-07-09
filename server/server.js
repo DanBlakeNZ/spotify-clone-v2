@@ -82,9 +82,7 @@ app.get("/api/callback", function(req, res) {
           refresh_token = body.refresh_token,
           expires_in = body.expires_in;
 
-        res.cookie("accessToken", access_token, {
-          maxAge: expires_in
-        });
+        res.cookie("accessToken", access_token);
         res.cookie("refreshToken", refresh_token);
 
         res.redirect(callback_url);
@@ -93,6 +91,34 @@ app.get("/api/callback", function(req, res) {
       }
     });
   }
+});
+
+app.get("/api/refresh_token", function(req, res) {
+  let refresh_token = req.query.refreshToken;
+  let authOptions = {
+    url: "https://accounts.spotify.com/api/token",
+    headers: {
+      Authorization: "Basic " + new Buffer.from(client_id + ":" + client_secret).toString("base64")
+    },
+    form: {
+      grant_type: "refresh_token",
+      refresh_token: refresh_token
+    },
+    json: true
+  };
+
+  request.post(authOptions, function(error, response, body) {
+    if (!error && response.statusCode === 200) {
+      let newAccessToken = body.access_token,
+        newRefreshToken = body.refresh_token || refresh_token;
+      res.send({
+        access_token: newAccessToken,
+        refresh_token: newRefreshToken
+      });
+    } else {
+      console.log(error); //TODO: Handle this error
+    }
+  });
 });
 
 // ENSURE THIS IS ALWAYS LAST

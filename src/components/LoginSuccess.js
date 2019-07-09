@@ -2,7 +2,9 @@ import React, { Component } from "react";
 
 class LoginSuccess extends Component {
   componentDidMount() {
-    window.opener.location.reload(false);
+    setTimeout(() => {
+      window.close();
+    }, 2000);
   }
   render() {
     return (
