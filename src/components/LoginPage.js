@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
 
 const env = process.env.NODE_ENV || "development";
 const baseurl = env === "development" ? "http://localhost:3000" : "https://spotify-clone-dblakenz.herokuapp.com";
@@ -69,6 +70,7 @@ class LoginPage extends Component {
         <button onClick={handleLogin}>Login</button>
         <button onClick={handleLogOut}>Logout</button>
         <p>{this.state.isLoggedIn ? "Logged In" : "LoggedOut"}</p>
+        <Link to="/browse">Browse</Link>
       </div>
     );
   }
