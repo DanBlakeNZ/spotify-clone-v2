@@ -17,14 +17,15 @@ class LoginPage extends Component {
 
   componentDidMount() {
     let { refreshToken, accessToken } = Cookies.get();
-    console.log(Cookies.get());
-    //User has previously logged in but the session has expired, it can be refresh.
-    if (refreshToken && !accessToken) {
-      console.log("Refreshing....");
+    if (accessToken && refreshToken) {
+      this.setState({
+        isLoggedIn: true
+      });
+    } else if (refreshToken && !accessToken) {
+      //User has previously logged in but the session has expired, it can be refresh.
       fetch(baseurl + `/api/refresh_token?refreshToken=${refreshToken}`, { credentials: "omit" })
         .then(response => response.json())
         .then(data => {
-          //Cookies.set("accessToken", data.accessToken, { expires: 0.000347222 }); //30 seconds
           Cookies.set("accessToken", accessToken, { expires: data.expiresIn / 86400 }); //js-cookie requires value in days - Spotify returns time in milliseconds.
           Cookies.set("refreshToken", data.refreshToken || refreshToken);
 
@@ -34,16 +35,14 @@ class LoginPage extends Component {
             isLoggedIn: true
           });
         });
-    } else {
-      this.setState({
-        isLoggedIn: true
-      });
     }
   }
 
   render() {
     const handleLogin = () => {
-      let win = window.open(baseurl + "/api/login", "_blank", "width=520, height=500");
+      let left = screen.width / 2 - 520 / 2,
+        top = screen.height / 2 - 500 / 2;
+      let win = window.open(baseurl + "/api/login", "_blank", `width=520, height=500, top=${top}, left=${left}`);
       let timer = setInterval(() => {
         if (win.closed) {
           onLoginSuccess();
@@ -62,7 +61,13 @@ class LoginPage extends Component {
     };
 
     const handleLogOut = () => {
-      var win = window.open("https://accounts.spotify.com/en/logout", "_blank", "width=520, height=500");
+      let left = screen.width / 2 - 520 / 2,
+        top = screen.height / 2 - 500 / 2;
+      var win = window.open(
+        "https://accounts.spotify.com/en/logout",
+        "_blank",
+        `width=520, height=500, top=${top}, left=${left}`
+      );
       Cookies.remove("refreshToken");
       Cookies.remove("accessToken");
       this.setState({
