@@ -115,6 +115,25 @@ app.get("/api/refresh_token", (req, res) => {
   });
 });
 
+app.get("/api/me", (req, res) => {
+  let accessToken = req.query.accessToken;
+
+  let authOptions = {
+    url: "https://api.spotify.com/v1/me",
+    headers: {
+      Authorization: "Bearer " + accessToken
+    }
+  };
+
+  request.get(authOptions, (error, response, body) => {
+    if (!error && response.statusCode === 200) {
+      res.send(body);
+    } else {
+      console.log(error); //TODO: Handle this error
+    }
+  });
+});
+
 // ENSURE THIS IS ALWAYS LAST
 app.get("*", (req, res) => {
   res.sendFile(path.join(publicPath, "index.html"));

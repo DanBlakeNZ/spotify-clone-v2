@@ -18,12 +18,18 @@ class LoginPage extends Component {
   componentDidMount() {
     let { refreshToken, accessToken } = Cookies.get();
     if (accessToken && refreshToken) {
+      fetch(baseurl + `/api/me?accessToken=${accessToken}`)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+        });
+
       this.setState({
         isLoggedIn: true
       });
     } else if (refreshToken && !accessToken) {
       //User has previously logged in but the session has expired, it can be refresh.
-      fetch(baseurl + `/api/refresh_token?refreshToken=${refreshToken}`, { credentials: "omit" })
+      fetch(baseurl + `/api/refresh_token?refreshToken=${refreshToken}`)
         .then(response => response.json())
         .then(data => {
           Cookies.set("accessToken", accessToken, { expires: data.expiresIn / 86400 }); //js-cookie requires value in days - Spotify returns time in milliseconds.
