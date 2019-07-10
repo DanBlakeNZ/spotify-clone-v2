@@ -16,18 +16,28 @@ class LoginPage extends Component {
   }
 
   componentDidMount() {
-    let { refreshToken } = Cookies.get();
-
-    if (refreshToken) {
-      fetch(baseurl + `/api/refresh_token?refreshToken=${refreshToken}`)
+    let { refreshToken, accessToken } = Cookies.get();
+    console.log(Cookies.get());
+    //User has previously logged in but the session has expired, it can be refresh.
+    if (refreshToken && !accessToken) {
+      console.log("Refreshing....");
+      fetch(baseurl + `/api/refresh_token?refreshToken=${refreshToken}`, { credentials: "omit" })
         .then(response => response.json())
         .then(data => {
+          //Cookies.set("accessToken", data.accessToken, { expires: 0.000347222 }); //30 seconds
+          Cookies.set("accessToken", accessToken, { expires: data.expiresIn / 86400 }); //js-cookie requires value in days - Spotify returns time in milliseconds.
+          Cookies.set("refreshToken", data.refreshToken || refreshToken);
+
           this.setState({
-            accessToken: data.access_token,
+            accessToken: data.accessToken,
             refreshToken: data.refreshToken || refreshToken,
             isLoggedIn: true
           });
         });
+    } else {
+      this.setState({
+        isLoggedIn: true
+      });
     }
   }
 
@@ -53,8 +63,8 @@ class LoginPage extends Component {
 
     const handleLogOut = () => {
       var win = window.open("https://accounts.spotify.com/en/logout", "_blank", "width=520, height=500");
-      Cookies.set("refreshToken", "");
-      Cookies.set("accessToken", "");
+      Cookies.remove("refreshToken");
+      Cookies.remove("accessToken");
       this.setState({
         accessToken: null,
         refreshToken: null,
