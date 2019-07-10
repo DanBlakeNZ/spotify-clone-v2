@@ -84,7 +84,7 @@ class LoginPage extends Component {
       <div>
         <button onClick={handleLogin}>Login</button>
         <button onClick={handleLogOut}>Logout</button>
-        <p>{this.state.isLoggedIn ? "Logged In" : "LoggedOut"}</p>
+        <p>{this.state.isLoggedIn ? "Logged In" : "Logged Out"}</p>
         <Link to="/browse">Browse</Link>
       </div>
     );
