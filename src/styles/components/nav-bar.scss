@@ -1,0 +1,17 @@
+.navBar-wrapper {
+  display: flex;
+  min-height: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  overflow-y: auto;
+  width: 230px;
+  will-change: transform;
+}
+
+.navBar {
+  display: flex;
+  padding-top: 24px;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  user-select: none;
+}

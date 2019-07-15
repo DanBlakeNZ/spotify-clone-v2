@@ -17,17 +17,7 @@ class LoginPage extends Component {
 
   componentDidMount() {
     let { refreshToken, accessToken } = Cookies.get();
-    if (accessToken && refreshToken) {
-      fetch(baseurl + `/api/me?accessToken=${accessToken}`)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-        });
-
-      this.setState({
-        isLoggedIn: true
-      });
-    } else if (refreshToken && !accessToken) {
+    if (refreshToken && !accessToken) {
       //User has previously logged in but the session has expired, it can be refresh.
       fetch(baseurl + `/api/refresh_token?refreshToken=${refreshToken}`)
         .then(response => response.json())
@@ -87,7 +77,7 @@ class LoginPage extends Component {
     };
 
     return (
-      <div>
+      <div className="login-page-wrapper">
         <button onClick={handleLogin}>Login</button>
         <button onClick={handleLogOut}>Logout</button>
         <p>{this.state.isLoggedIn ? "Logged In" : "Logged Out"}</p>

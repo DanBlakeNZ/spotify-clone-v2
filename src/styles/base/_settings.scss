@@ -1,9 +1,45 @@
+@font-face {
+  font-family: "Circular-Light-200";
+  src: url(~../fonts/Circular-Light-200.woff2) format("woff2");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Circular-Book-400";
+  src: url(~../fonts/Circular-Book-400.woff2) format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Circular-Bold-700";
+  src: url(~../fonts/Circular-Bold-700.woff2) format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Circular-Black-900";
+  src: url(~../fonts/Circular-Black-900.woff2) format("woff2");
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Spot-Icon";
+  src: url(~../fonts/spoticon-400.woff2) format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
 // Colors
 $spotify-green: #1ed760;
 $spotify-grey: #b3b3b3;
 
 // Spacing
-$s-size: 1.2rem;
+$xs-size: 1.2rem;
+$s-size: 1.4rem;
 $m-size: 1.6rem;
 $l-size: 3.2rem;
 $xl-size: 4.8rem;
@@ -13,3 +49,9 @@ $desktop-breakpoint: 45rem;
 $font-size-large: 3.6rem;
 $font-size-medium: 1.4rem;
 $font-size-small: 1.2rem;
+
+// Font Names
+$circular-light: "Circular-Light-200";
+$circular-book: "Circular-Book-400";
+$circular-bold: "Circular-Bold-700";
+$circular-black: "Circular-Black-900";

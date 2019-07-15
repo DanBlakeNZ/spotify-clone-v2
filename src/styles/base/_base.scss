@@ -7,9 +7,13 @@ html {
 }
 
 body {
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: $m-size;
-  line-height: 1.6;
+  // background: #000000;
+  color: $spotify-grey;
+  font-family: $circular-book;
+  font-size: $s-size;
+  line-height: 0.2em;
+  letter-spacing: 0.015em;
+  text-transform: none;
 }
 
 button {

@@ -1,2 +1,4 @@
 @import "./base/settings"; //should always be first so can be used by follow on scss files.
 @import "./base/base";
+@import "./components/login-page.scss";
+@import "./components/nav-bar.scss";

@@ -9,7 +9,7 @@ module.exports = env => {
     stats: "errors-only",
     entry: "./src/app.js",
     output: {
-      path: path.resolve(__dirname, "public", "dist"),
+      path: path.resolve(__dirname, "public"),
       filename: "bundle.js"
     },
     module: {
@@ -54,7 +54,15 @@ module.exports = env => {
         },
         {
           test: /\.(woff|woff2|eot|ttf|otf)$/,
-          use: ["file-loader"]
+          use: [
+            {
+              loader: "file-loader",
+              options: {
+                name: "[name].[ext]",
+                outputPath: "fonts/"
+              }
+            }
+          ]
         },
         {
           test: /\.svg$/,

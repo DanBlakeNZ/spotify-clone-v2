@@ -60,3 +60,11 @@ typings/
 # next.js build output
 .next
 public/dist/bundle.js
+public/fonts/Circular-Black-900.woff2
+public/fonts/Circular-Bold-700.woff2
+public/fonts/Circular-Book-400.woff2
+public/fonts/Circular-Light-200.woff2
+public/fonts/spoticon-400.woff2
+public/bundle.js
+
+public/fonts
