@@ -4,7 +4,9 @@ class NavBar extends Component {
   render() {
     return (
       <div className="navBar-wrapper">
-        <nav className="navBar">Nav Bar</nav>
+        <nav className="navBar">
+          <div>NavBar</div>
+        </nav>
       </div>
     );
   }

@@ -11,11 +11,15 @@ body {
   color: $spotify-grey;
   font-family: $circular-book;
   font-size: $s-size;
-  line-height: 0.2em;
   letter-spacing: 0.015em;
   text-transform: none;
 }
 
 button {
   cursor: pointer;
+}
+
+.app-wrapper {
+  display: flex;
+  justify-content: left;
 }
