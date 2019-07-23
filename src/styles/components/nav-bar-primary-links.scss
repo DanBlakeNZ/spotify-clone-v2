@@ -1,0 +1,48 @@
+.navBar-item {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.015em;
+}
+
+.navBar-link {
+  border: 0;
+  width: 100%;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 40px;
+  margin-right: 0;
+
+  transition-property: color;
+  transition-duration: 0.2s;
+  transition-timing-function: linear;
+}
+
+.navBar-link:hover {
+  color: #ffffff;
+}
+
+.navBar-link .active {
+  color: #ffffff;
+}
+
+.navBar-link-text-with-icon-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.navBar-icon-container {
+  height: 24px;
+  width: 24px;
+}
+
+.navBar-icon .active {
+  color: #ffffff;
+}
+
+.navBar-link-text {
+  margin-left: 16px;
+  flex: 1;
+  min-width: 0;
+}

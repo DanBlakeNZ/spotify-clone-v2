@@ -5,7 +5,21 @@
 }
 
 .navBar {
-  display: flex;
   padding-top: 24px;
   height: 100vh;
+  width: 230px;
+}
+
+.navBar-header {
+  width: 100%;
+}
+
+.navBar-logo-link {
+  display: flex;
+  padding-left: 24px;
+  padding-bottom: 23px;
+}
+
+.navBar-logo {
+  color: #ffffff;
 }
