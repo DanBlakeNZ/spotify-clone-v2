@@ -4,46 +4,22 @@ import SearchIcon from "../images/icon_search.svg";
 import LibraryIcon from "../images/icon_library.svg";
 import { Link } from "react-router-dom";
 
-const NavBarPrimaryLinks = () => (
+const NavBarPrimaryLinks = props => (
   <ul>
-    <li>
-      <div className="navBar-item">
-        <Link to="/browse" className="navBar-link active">
-          <div className="navBar-link-text-with-icon-wrapper">
-            <div className="navBar-icon-container">
-              <HomeIcon className="navBar-icon" width={24} height={24} />
+    {props.items.map(item => (
+      <li key={item.name}>
+        <div className="navBar-item">
+          <Link to={item.url} className="navBar-link">
+            <div className="navBar-link-text-with-icon-wrapper">
+              <div className="navBar-icon-container">
+                {item.name === "Home" ? <HomeIcon /> : item.name === "Search" ? <SearchIcon /> : <LibraryIcon />}
+              </div>
+              <span className="navBar-link-text">{item.name}</span>
             </div>
-            <span className="navBar-link-text">Home</span>
-          </div>
-        </Link>
-      </div>
-    </li>
-
-    <li>
-      <div className="navBar-item">
-        <Link to="/search" className="navBar-link">
-          <div className="navBar-link-text-with-icon-wrapper">
-            <div className="navBar-icon-container">
-              <SearchIcon className="navBar-icon" width={24} height={24} />
-            </div>
-            <span className="navBar-link-text">Search</span>
-          </div>
-        </Link>
-      </div>
-    </li>
-
-    <li>
-      <div className="navBar-item">
-        <Link to="/library" className="navBar-link">
-          <div className="navBar-link-text-with-icon-wrapper">
-            <div className="navBar-icon-container">
-              <LibraryIcon className="navBar-icon" width={24} height={24} />
-            </div>
-            <span className="navBar-link-text">Your Library</span>
-          </div>
-        </Link>
-      </div>
-    </li>
+          </Link>
+        </div>
+      </li>
+    ))}
   </ul>
 );
 

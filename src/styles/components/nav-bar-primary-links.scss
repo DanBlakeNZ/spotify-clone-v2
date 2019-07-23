@@ -2,10 +2,15 @@
   font-size: 14px;
   line-height: 20px;
   letter-spacing: 0.015em;
+  fill: #ffffff;
 }
 
 .navBar-item .active {
   color: #ffffff;
+}
+
+.navBar-icon {
+  fill: #ffffff;
 }
 
 .navBar-link {
@@ -32,7 +37,8 @@
   align-items: center;
 }
 
-.navBar-icon-container {
+.navBar-icon-container,
+.navBar-icon {
   height: 24px;
   width: 24px;
 }
