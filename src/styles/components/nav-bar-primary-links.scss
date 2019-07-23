@@ -4,6 +4,10 @@
   letter-spacing: 0.015em;
 }
 
+.navBar-item .active {
+  color: #ffffff;
+}
+
 .navBar-link {
   border: 0;
   width: 100%;
@@ -23,10 +27,6 @@
   color: #ffffff;
 }
 
-.navBar-link .active {
-  color: #ffffff;
-}
-
 .navBar-link-text-with-icon-wrapper {
   display: flex;
   align-items: center;
@@ -35,10 +35,6 @@
 .navBar-icon-container {
   height: 24px;
   width: 24px;
-}
-
-.navBar-icon .active {
-  color: #ffffff;
 }
 
 .navBar-link-text {

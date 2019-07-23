@@ -6,9 +6,9 @@ import { Link } from "react-router-dom";
 
 const NavBarPrimaryLinks = () => (
   <ul>
-    <li className="navBar-group">
+    <li>
       <div className="navBar-item">
-        <Link to="/browse" className="navBar-link">
+        <Link to="/browse" className="navBar-link active">
           <div className="navBar-link-text-with-icon-wrapper">
             <div className="navBar-icon-container">
               <HomeIcon className="navBar-icon" width={24} height={24} />
@@ -17,6 +17,9 @@ const NavBarPrimaryLinks = () => (
           </div>
         </Link>
       </div>
+    </li>
+
+    <li>
       <div className="navBar-item">
         <Link to="/search" className="navBar-link">
           <div className="navBar-link-text-with-icon-wrapper">
@@ -27,6 +30,9 @@ const NavBarPrimaryLinks = () => (
           </div>
         </Link>
       </div>
+    </li>
+
+    <li>
       <div className="navBar-item">
         <Link to="/library" className="navBar-link">
           <div className="navBar-link-text-with-icon-wrapper">
