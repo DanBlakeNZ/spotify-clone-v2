@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import Cookies from "js-cookie";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const env = process.env.NODE_ENV || "development";
 const baseurl = env === "development" ? "http://localhost:3000" : "https://spotify-clone-dblakenz.herokuapp.com";
@@ -8,6 +9,7 @@ const baseurl = env === "development" ? "http://localhost:3000" : "https://spoti
 class LoginPage extends Component {
   constructor(props) {
     super(props);
+    console.log(this.props);
     this.state = {
       accessToken: null,
       refreshToken: null,
@@ -87,4 +89,11 @@ class LoginPage extends Component {
   }
 }
 
-export default LoginPage;
+const mapStateToProps = state => {
+  let testValue = state.auth;
+  return {
+    loggedIn: testValue
+  };
+};
+
+export default connect(mapStateToProps)(LoginPage);
