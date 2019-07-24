@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
+import { login, logout } from "../actions/auth";
 
 const env = process.env.NODE_ENV || "development";
 const baseurl = env === "development" ? "http://localhost:3000" : "https://spotify-clone-dblakenz.herokuapp.com";
@@ -9,7 +10,6 @@ const baseurl = env === "development" ? "http://localhost:3000" : "https://spoti
 class LoginPage extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
     this.state = {
       accessToken: null,
       refreshToken: null,
@@ -37,6 +37,20 @@ class LoginPage extends Component {
   }
 
   render() {
+    const testLogin = () => {
+      let { refreshToken, accessToken } = Cookies.get();
+      let authDetails = {
+        accessToken,
+        refreshToken,
+        isLoggedIn: true
+      };
+      this.props.login(authDetails);
+    };
+
+    const testLogout = () => {
+      this.props.logout();
+    };
+
     const handleLogin = () => {
       let left = screen.width / 2 - 520 / 2,
         top = screen.height / 2 - 500 / 2;
@@ -80,6 +94,8 @@ class LoginPage extends Component {
 
     return (
       <div className="login-page-wrapper">
+        <button onClick={testLogin}>TEST Login</button>
+        <button onClick={testLogout}>TEST Logout</button>
         <button onClick={handleLogin}>Login</button>
         <button onClick={handleLogOut}>Logout</button>
         <p>{this.state.isLoggedIn ? "Logged In" : "Logged Out"}</p>
@@ -89,6 +105,13 @@ class LoginPage extends Component {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    login: authDetails => dispatch(login(authDetails)),
+    logout: () => dispatch(logout())
+  };
+};
+
 const mapStateToProps = state => {
   let testValue = state.auth;
   return {
@@ -96,4 +119,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(LoginPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginPage);

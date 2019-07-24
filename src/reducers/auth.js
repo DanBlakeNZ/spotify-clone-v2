@@ -2,7 +2,9 @@ export default (state = {}, action) => {
   switch (action.type) {
     case "LOGIN":
       return {
-        uid: action.uid
+        accessToken: action.accessToken,
+        refreshToken: action.refreshToken,
+        isLoggedIn: action.isLoggedIn
       };
     case "LOGOUT":
       return {};
