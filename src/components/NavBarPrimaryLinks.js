@@ -4,11 +4,13 @@ import SearchIcon from "../images/icon_search.svg";
 import LibraryIcon from "../images/icon_library.svg";
 import { Link } from "react-router-dom";
 
+let location = window.location.pathname;
+
 const NavBarPrimaryLinks = props => (
   <ul>
-    {props.items.map(item => (
+    {props.navBarItems.map(item => (
       <li key={item.name}>
-        <div className="navBar-item">
+        <div className={location == item.url ? "navBar-item active" : "navBar-item"}>
           <Link to={item.url} className="navBar-link">
             <div className="navBar-link-text-with-icon-wrapper">
               <div className="navBar-icon-container">
