@@ -1,8 +1,6 @@
-export const login = (accessToken, refreshToken, isLoggedIn) => ({
+export const login = authDetails => ({
   type: "LOGIN",
-  accessToken,
-  refreshToken,
-  isLoggedIn
+  ...authDetails
 });
 
 export const logout = () => ({
