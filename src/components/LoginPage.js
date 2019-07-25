@@ -3,90 +3,54 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { login, logout } from "../actions/auth";
+import { refreshLogin } from "../api/spotifyApi";
 
-const env = process.env.NODE_ENV || "development";
-const baseurl = env === "development" ? "http://localhost:3000" : "https://spotify-clone-dblakenz.herokuapp.com";
+const env = process.env.NODE_ENV || "development",
+  baseurl = env === "development" ? "http://localhost:3000" : "https://spotify-clone-dblakenz.herokuapp.com",
+  left = screen.width / 2 - 520 / 2,
+  top = screen.height / 2 - 500 / 2;
 
 class LoginPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      accessToken: null,
-      refreshToken: null,
-      isLoggedIn: false
-    };
-  }
-
   componentDidMount() {
     let { refreshToken, accessToken } = Cookies.get();
     if (refreshToken && !accessToken) {
-      //User has previously logged in but the session has expired, it can be refresh.
-      fetch(baseurl + `/api/refresh_token?refreshToken=${refreshToken}`)
-        .then(response => response.json())
-        .then(data => {
-          Cookies.set("accessToken", accessToken, { expires: data.expiresIn / 86400 }); //js-cookie requires value in days - Spotify returns time in milliseconds.
-          Cookies.set("refreshToken", data.refreshToken || refreshToken);
-
-          this.setState({
-            accessToken: data.accessToken,
-            refreshToken: data.refreshToken || refreshToken,
-            isLoggedIn: true
-          });
-        });
-    }
-  }
-
-  render() {
-    const testLogin = () => {
-      let { refreshToken, accessToken } = Cookies.get();
+      refreshLogin(refreshToken);
+    } else {
       let authDetails = {
         accessToken,
         refreshToken,
         isLoggedIn: true
       };
       this.props.login(authDetails);
-    };
+    }
+  }
 
-    const testLogout = () => {
-      this.props.logout();
-    };
-
+  render() {
     const handleLogin = () => {
-      let left = screen.width / 2 - 520 / 2,
-        top = screen.height / 2 - 500 / 2;
-      let win = window.open(baseurl + "/api/login", "_blank", `width=520, height=500, top=${top}, left=${left}`);
-      let timer = setInterval(() => {
+      const win = window.open(baseurl + "/api/login", "_blank", `width=520, height=500, top=${top}, left=${left}`);
+      const timer = setInterval(() => {
         if (win.closed) {
-          onLoginSuccess();
+          let { refreshToken, accessToken } = Cookies.get();
+          let authDetails = {
+            accessToken,
+            refreshToken,
+            isLoggedIn: true
+          };
+          this.props.login(authDetails);
           clearInterval(timer);
         }
       }, 100);
     };
 
-    const onLoginSuccess = () => {
-      let { refreshToken, accessToken } = Cookies.get();
-      this.setState({
-        accessToken,
-        refreshToken,
-        isLoggedIn: true
-      });
-    };
-
     const handleLogOut = () => {
-      let left = screen.width / 2 - 520 / 2,
-        top = screen.height / 2 - 500 / 2;
-      var win = window.open(
+      const win = window.open(
         "https://accounts.spotify.com/en/logout",
         "_blank",
         `width=520, height=500, top=${top}, left=${left}`
       );
-      Cookies.remove("refreshToken");
-      Cookies.remove("accessToken");
-      this.setState({
-        accessToken: null,
-        refreshToken: null,
-        isLoggedIn: false
-      });
+      Cookies.remove("refreshToken", "accessToken");
+      this.props.logout();
+
       setTimeout(() => {
         win.close();
       }, 3000);
@@ -94,11 +58,13 @@ class LoginPage extends Component {
 
     return (
       <div className="login-page-wrapper">
-        <button onClick={testLogin}>TEST Login</button>
-        <button onClick={testLogout}>TEST Logout</button>
-        <button onClick={handleLogin}>Login</button>
-        <button onClick={handleLogOut}>Logout</button>
-        <p>{this.state.isLoggedIn ? "Logged In" : "Logged Out"}</p>
+        <p>
+          {this.props.auth.isLoggedIn ? (
+            <button onClick={handleLogOut}>Logout</button>
+          ) : (
+            <button onClick={handleLogin}>Login</button>
+          )}
+        </p>
         <Link to="/browse">Browse</Link>
       </div>
     );
@@ -113,9 +79,8 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = state => {
-  let testValue = state.auth;
   return {
-    loggedIn: testValue
+    auth: state.auth
   };
 };
 

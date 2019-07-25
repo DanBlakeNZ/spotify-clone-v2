@@ -1,4 +1,4 @@
-export default (state = {}, action) => {
+export default (state = { isLoggedIn: false }, action) => {
   switch (action.type) {
     case "LOGIN":
       return {
@@ -7,7 +7,9 @@ export default (state = {}, action) => {
         isLoggedIn: action.isLoggedIn
       };
     case "LOGOUT":
-      return {};
+      return {
+        isLoggedIn: false
+      };
     default:
       return state;
   }

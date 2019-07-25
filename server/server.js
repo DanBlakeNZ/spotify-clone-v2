@@ -106,8 +106,8 @@ app.get("/api/refresh_token", (req, res) => {
     if (!error && response.statusCode === 200) {
       res.send({
         accessToken: body.access_token,
-        refreshToken: body.expires_in,
-        expiresIn: body.refresh_token || refreshToken
+        refreshToken: body.refresh_token || refreshToken,
+        expiresIn: body.expires_in
       });
     } else {
       console.log(error); //TODO: Handle this error
