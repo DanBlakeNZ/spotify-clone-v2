@@ -13,15 +13,21 @@ const env = process.env.NODE_ENV || "development",
 class LoginPage extends Component {
   componentDidMount() {
     let { refreshToken, accessToken } = Cookies.get();
-    if (refreshToken && !accessToken) {
-      refreshLogin(refreshToken);
-    } else {
+    const setLogin = (accessToken, refreshToken) => {
       let authDetails = {
         accessToken,
         refreshToken,
-        isLoggedIn: true
+        isLoggedIn: accessToken ? true : false
       };
       this.props.login(authDetails);
+    };
+
+    if (refreshToken && !accessToken) {
+      refreshLogin(refreshToken).then(auth => {
+        setLogin(auth.accessToken, auth.refreshToken);
+      });
+    } else if (refreshToken && accessToken) {
+      setLogin(accessToken, refreshToken);
     }
   }
 
