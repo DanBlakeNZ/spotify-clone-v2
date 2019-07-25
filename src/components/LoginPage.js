@@ -54,7 +54,8 @@ class LoginPage extends Component {
         "_blank",
         `width=520, height=500, top=${top}, left=${left}`
       );
-      Cookies.remove("refreshToken", "accessToken");
+      Cookies.remove("refreshToken");
+      Cookies.remove("accessToken");
       this.props.logout();
 
       setTimeout(() => {
