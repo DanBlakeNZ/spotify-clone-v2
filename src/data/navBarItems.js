@@ -8,7 +8,7 @@ const navBarItems = [
     url: "/search"
   },
   {
-    name: "My Library",
+    name: "Your Library",
     url: "/library"
   }
 ];

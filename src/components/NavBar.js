@@ -14,7 +14,7 @@ class NavBar extends Component {
               <SpotifyLogo className="navBar-logo" width={131} height={40} />
             </Link>
           </div>
-          <NavBarPrimaryLinks navBarItems={navBarItems} />
+          <NavBarPrimaryLinks location={this.props.location} navBarItems={navBarItems} />
         </nav>
       </div>
     );
