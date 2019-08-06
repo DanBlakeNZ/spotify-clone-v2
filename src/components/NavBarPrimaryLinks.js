@@ -4,13 +4,7 @@ import SearchIcon from "../images/icon_search.svg";
 import LibraryIcon from "../images/icon_library.svg";
 import { Link } from "react-router-dom";
 
-let location = window.location.pathname;
-
 export default class NavBarPrimaryLinks extends Component {
-  componentDidMount() {
-    console.log(this.props);
-  }
-
   render() {
     return (
       <ul>
