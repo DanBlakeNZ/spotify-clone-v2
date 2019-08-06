@@ -6,7 +6,18 @@
 }
 
 .navBar-item.active {
+  position: relative;
   color: #ffffff;
+}
+
+.active:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  width: 4px;
+  background-color: #1ed760;
 }
 
 .navBar-icon {
