@@ -14,3 +14,12 @@ export const refreshLogin = refreshToken => {
     })
     .catch(error => console.error(error));
 };
+
+export const getCurrentUserProfile = accessToken => {
+  return fetch(baseurl + `/api/me?accessToken=${accessToken}`)
+    .then(response => response.json())
+    .then(data => {
+      return data;
+    })
+    .catch(error => console.error(error));
+};
