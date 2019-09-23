@@ -16,15 +16,17 @@ import YourLibraryPage from "../components/YourLibraryPage";
 
 import { loginAction, logoutAction } from "../actions/authActions";
 import { refreshLogin } from "../api/spotifyApi";
+import LoadingPage from "../components/LoadingPage";
 
 export const history = createBrowserHistory();
 
-const env = process.env.NODE_ENV || "development",
-  baseurl = env === "development" ? "http://localhost:3000" : "https://spotify-clone-dblakenz.herokuapp.com",
-  left = screen.width / 2 - 520 / 2,
-  top = screen.height / 2 - 500 / 2;
-
 class AppRouter extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: true
+    };
+  }
   componentDidMount() {
     let { refreshToken, accessToken } = Cookies.get();
     const setLogin = (accessToken, refreshToken) => {
@@ -34,6 +36,8 @@ class AppRouter extends Component {
         isLoggedIn: accessToken ? true : false
       };
       this.props.login(authDetails);
+      this.setState(() => ({ loading: false }));
+      console.log(this.state);
     };
 
     if (refreshToken && !accessToken) {
@@ -42,25 +46,33 @@ class AppRouter extends Component {
       });
     } else if (refreshToken && accessToken) {
       setLogin(accessToken, refreshToken);
+    } else {
+      this.setState(() => ({ loading: false }));
     }
   }
 
   render() {
     return (
-      <Provider store={this.props.store}>
-        <Router history={history}>
-          <div>
-            <Switch>
-              <Route path="/" component={LoginPage} exact={true} />
-              <Route path="/loginsuccess" component={LoginSuccess} />
-              <PrivateRoute path="/browse" component={BrowsePage} accessToken={this.props.auth.accessToken} />
-              <PrivateRoute path="/search" component={SearchPage} accessToken={this.props.auth.accessToken} />
-              <PrivateRoute path="/library" component={YourLibraryPage} accessToken={this.props.auth.accessToken} />
-              <Route component={NotFoundPage} />
-            </Switch>
-          </div>
-        </Router>
-      </Provider>
+      <div>
+        {this.state.loading ? (
+          <LoadingPage />
+        ) : (
+          <Provider store={this.props.store}>
+            <Router history={history}>
+              <div>
+                <Switch>
+                  <Route path="/" component={LoginPage} exact={true} />
+                  <Route path="/loginsuccess" component={LoginSuccess} />
+                  <PrivateRoute path="/browse" component={BrowsePage} accessToken={this.props.auth.accessToken} />
+                  <PrivateRoute path="/search" component={SearchPage} accessToken={this.props.auth.accessToken} />
+                  <PrivateRoute path="/library" component={YourLibraryPage} accessToken={this.props.auth.accessToken} />
+                  <Route component={NotFoundPage} />
+                </Switch>
+              </div>
+            </Router>
+          </Provider>
+        )}
+      </div>
     );
   }
 }
