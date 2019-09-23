@@ -88,6 +88,7 @@ app.get("/api/callback", (req, res) => {
   }
 });
 
+// GET REFRESH TOKEN
 app.get("/api/refresh_token", (req, res) => {
   let refreshToken = req.query.refreshToken;
   let authOptions = {
@@ -115,10 +116,51 @@ app.get("/api/refresh_token", (req, res) => {
   });
 });
 
+// GET CURRENT USER'S DETAILS
 app.get("/api/me", (req, res) => {
   let accessToken = req.query.accessToken;
   let authOptions = {
     url: "https://api.spotify.com/v1/me",
+    headers: {
+      Authorization: "Bearer " + accessToken
+    }
+  };
+
+  request.get(authOptions, (error, response, body) => {
+    if (!error && response.statusCode === 200) {
+      res.send(body);
+    } else {
+      console.log(error); //TODO: Handle this error
+    }
+  });
+});
+
+// GET LIST OF CURRENT USER'S PLAYLISTS
+app.get("/api/me/playlists", (req, res) => {
+  let accessToken = req.query.accessToken;
+  let authOptions = {
+    url: "https://api.spotify.com/v1/me/playlists?limit=10",
+    headers: {
+      Authorization: "Bearer " + accessToken
+    }
+  };
+
+  request.get(authOptions, (error, response, body) => {
+    if (!error && response.statusCode === 200) {
+      res.send(body);
+    } else {
+      console.log(error); //TODO: Handle this error
+    }
+  });
+});
+
+// GET LIST OF NEW RELEASES IN USERS COUNTRY
+app.get("/api/browse/new-releases", (req, res) => {
+  let accessToken = req.query.accessToken;
+  let country = req.query.country;
+  console.log(country);
+  let authOptions = {
+    url: "https://api.spotify.com/v1/browse/new-releases?country=" + country,
     headers: {
       Authorization: "Bearer " + accessToken
     }

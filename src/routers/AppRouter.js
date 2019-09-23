@@ -42,6 +42,9 @@ class AppRouter extends Component {
       });
     };
 
+    // User's previous session has expired - session can be refreshed.
+    // User has a valid session and is logged in.
+    // User has no valid session details and needs to login.
     if (refreshToken && !accessToken) {
       refreshLogin(refreshToken).then(auth => {
         setLogin(auth.accessToken, auth.refreshToken);

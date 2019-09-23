@@ -23,3 +23,21 @@ export const getCurrentUserProfile = accessToken => {
     })
     .catch(error => console.error(error));
 };
+
+export const getCurrentUserPlaylists = accessToken => {
+  return fetch(baseurl + `/api/me/playlists?accessToken=${accessToken}`)
+    .then(response => response.json())
+    .then(data => {
+      return data;
+    })
+    .catch(error => console.error(error));
+};
+
+export const getNewReleases = (accessToken, country) => {
+  return fetch(baseurl + `/api/browse/new-releases?accessToken=${accessToken}&country=${country}`)
+    .then(response => response.json())
+    .then(data => {
+      return data;
+    })
+    .catch(error => console.error(error));
+};

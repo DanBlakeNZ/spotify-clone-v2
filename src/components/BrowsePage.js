@@ -16,7 +16,6 @@ class BrowsePage extends Component {
       <div>
         <p>Welcome {this.props.user.displayName}</p>
         <Link to="/">Home</Link>
-        <p>{artists}</p>
       </div>
     );
   }
