@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
+import { getCurrentUserProfile } from "../api/spotifyApi";
 import { loginAction, logoutAction } from "../actions/authActions";
+import { setCurrentUserDetails } from "../actions/currentUserActions";
 
 const env = process.env.NODE_ENV || "development",
   baseurl = env === "development" ? "http://localhost:3000" : "https://spotify-clone-dblakenz.herokuapp.com",
@@ -22,6 +24,11 @@ class LoginPage extends Component {
             isLoggedIn: true
           };
           this.props.login(authDetails);
+
+          getCurrentUserProfile(accessToken).then(userData => {
+            this.props.setCurrentUser(userData);
+            this.setState(() => ({ loading: false }));
+          });
           clearInterval(timer);
         }
       }, 100);
@@ -60,7 +67,8 @@ class LoginPage extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     login: authDetails => dispatch(loginAction(authDetails)),
-    logout: () => dispatch(logoutAction())
+    logout: () => dispatch(logoutAction()),
+    setCurrentUser: userData => dispatch(setCurrentUserDetails(userData))
   };
 };
 
