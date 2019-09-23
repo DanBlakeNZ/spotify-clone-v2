@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { loginAction, logoutAction } from "../actions/authActions";
-import { refreshLogin } from "../api/spotifyApi";
 
 const env = process.env.NODE_ENV || "development",
   baseurl = env === "development" ? "http://localhost:3000" : "https://spotify-clone-dblakenz.herokuapp.com",
@@ -11,26 +10,6 @@ const env = process.env.NODE_ENV || "development",
   top = screen.height / 2 - 500 / 2;
 
 class LoginPage extends Component {
-  componentDidMount() {
-    let { refreshToken, accessToken } = Cookies.get();
-    const setLogin = (accessToken, refreshToken) => {
-      let authDetails = {
-        accessToken,
-        refreshToken,
-        isLoggedIn: accessToken ? true : false
-      };
-      this.props.login(authDetails);
-    };
-
-    if (refreshToken && !accessToken) {
-      refreshLogin(refreshToken).then(auth => {
-        setLogin(auth.accessToken, auth.refreshToken);
-      });
-    } else if (refreshToken && accessToken) {
-      setLogin(accessToken, refreshToken);
-    }
-  }
-
   render() {
     const handleLogin = () => {
       const win = window.open(baseurl + "/api/login", "_blank", `width=520, height=500, top=${top}, left=${left}`);

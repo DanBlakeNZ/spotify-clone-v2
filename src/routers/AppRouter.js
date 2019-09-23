@@ -4,19 +4,17 @@ import { Router, Route, Switch } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { Provider } from "react-redux";
 import Cookies from "js-cookie";
-
 import { PrivateRoute } from "./PrivateRoute";
-
 import LoginSuccess from "../components/LoginSuccess";
 import LoginPage from "../components/LoginPage";
 import NotFoundPage from "../components/NotFoundPage";
 import BrowsePage from "../components/BrowsePage";
 import SearchPage from "../components/SearchPage";
 import YourLibraryPage from "../components/YourLibraryPage";
-
-import { loginAction, logoutAction } from "../actions/authActions";
-import { refreshLogin } from "../api/spotifyApi";
 import LoadingPage from "../components/LoadingPage";
+import { refreshLogin, getCurrentUserProfile } from "../api/spotifyApi";
+import { loginAction } from "../actions/authActions";
+import { setCurrentUserDetails } from "../actions/currentUserActions";
 
 export const history = createBrowserHistory();
 
@@ -29,6 +27,7 @@ class AppRouter extends Component {
   }
   componentDidMount() {
     let { refreshToken, accessToken } = Cookies.get();
+
     const setLogin = (accessToken, refreshToken) => {
       let authDetails = {
         accessToken,
@@ -36,7 +35,11 @@ class AppRouter extends Component {
         isLoggedIn: accessToken ? true : false
       };
       this.props.login(authDetails);
-      this.setState(() => ({ loading: false }));
+
+      getCurrentUserProfile(accessToken).then(userData => {
+        this.props.setCurrentUser(userData);
+        this.setState(() => ({ loading: false }));
+      });
     };
 
     if (refreshToken && !accessToken) {
@@ -79,13 +82,14 @@ class AppRouter extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     login: authDetails => dispatch(loginAction(authDetails)),
-    logout: () => dispatch(logoutAction())
+    setCurrentUser: userData => dispatch(setCurrentUserDetails(userData))
   };
 };
 
 const mapStateToProps = state => {
   return {
-    auth: state.auth
+    auth: state.auth,
+    currentUser: state.currentUser
   };
 };
 
