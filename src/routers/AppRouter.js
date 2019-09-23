@@ -37,7 +37,6 @@ class AppRouter extends Component {
       };
       this.props.login(authDetails);
       this.setState(() => ({ loading: false }));
-      console.log(this.state);
     };
 
     if (refreshToken && !accessToken) {

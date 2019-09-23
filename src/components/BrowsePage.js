@@ -1,17 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-
 import { getCurrentUserProfile } from "../api/spotifyApi";
 import { setCurrentUserDetails } from "../actions/currentUserActions";
 
 class BrowsePage extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+    if (!this.props.currentUser.displayName) {
+      getCurrentUserProfile(this.props.auth.accessToken).then(userData => {
+        this.props.setCurrentUser(userData);
+      });
+    }
+  }
 
   render() {
-    getCurrentUserProfile(this.props.auth.accessToken).then(userData => {
-      this.props.setCurrentUser(userData);
-    });
     return (
       <div>
         <p>Welcome {this.props.currentUser.displayName}</p>
@@ -23,7 +25,7 @@ class BrowsePage extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setCurrentUser: userDetails => dispatch(setCurrentUserDetails(userDetails))
+    setCurrentUser: userData => dispatch(setCurrentUserDetails(userData))
   };
 };
 
