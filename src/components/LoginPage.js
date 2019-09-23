@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
-import { login, logout } from "../actions/auth";
+import { loginAction, logoutAction } from "../actions/authActions";
 import { refreshLogin } from "../api/spotifyApi";
 
 const env = process.env.NODE_ENV || "development",
@@ -80,8 +80,8 @@ class LoginPage extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: authDetails => dispatch(login(authDetails)),
-    logout: () => dispatch(logout())
+    login: authDetails => dispatch(loginAction(authDetails)),
+    logout: () => dispatch(logoutAction())
   };
 };
 

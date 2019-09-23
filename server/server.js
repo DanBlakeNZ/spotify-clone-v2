@@ -117,7 +117,6 @@ app.get("/api/refresh_token", (req, res) => {
 
 app.get("/api/me", (req, res) => {
   let accessToken = req.query.accessToken;
-
   let authOptions = {
     url: "https://api.spotify.com/v1/me",
     headers: {

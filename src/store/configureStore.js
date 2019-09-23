@@ -1,12 +1,14 @@
-import { createStore, combineReducers, compose, applyMiddleware } from "redux";
+import { createStore, combineReducers } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 
-import authReducer from "../reducers/auth";
+import authReducer from "../reducers/authReducer";
+import currentUserReducer from "../reducers/currentUserReducer";
 
 export default () => {
   const store = createStore(
     combineReducers({
-      auth: authReducer
+      auth: authReducer,
+      currentUser: currentUserReducer
     }),
     composeWithDevTools()
   );
