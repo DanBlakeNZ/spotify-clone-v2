@@ -8,7 +8,7 @@ export const PrivateRoute = ({ component: Component, accessToken, ...rest }) => 
     component={props =>
       accessToken ? (
         <div className="app-wrapper">
-          <NavBar {...props} /> <Component {...props} />{" "}
+          <NavBar {...props} /> <Component {...props} accessToken={accessToken} />{" "}
         </div>
       ) : (
         <Redirect to="/" />

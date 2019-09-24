@@ -41,3 +41,12 @@ export const getNewReleases = (accessToken, country) => {
     })
     .catch(error => console.error(error));
 };
+
+export const getAlbum = (accessToken, albumId) => {
+  return fetch(baseurl + `/api/album?accessToken=${accessToken}&albumId=${albumId}`)
+    .then(response => response.json())
+    .then(data => {
+      return data;
+    })
+    .catch(error => console.error(error));
+};

@@ -5,6 +5,9 @@ import { createBrowserHistory } from "history";
 import { Provider } from "react-redux";
 import Cookies from "js-cookie";
 import { PrivateRoute } from "./PrivateRoute";
+import { refreshLogin, getCurrentUserProfile } from "../api/spotifyApi";
+import { loginAction } from "../actions/authActions";
+import { setCurrentUserDetails } from "../actions/currentUserActions";
 import LoginSuccess from "../components/LoginSuccess";
 import LoginPage from "../components/LoginPage";
 import NotFoundPage from "../components/NotFoundPage";
@@ -12,9 +15,8 @@ import BrowsePage from "../components/BrowsePage";
 import SearchPage from "../components/SearchPage";
 import YourLibraryPage from "../components/YourLibraryPage";
 import LoadingPage from "../components/LoadingPage";
-import { refreshLogin, getCurrentUserProfile } from "../api/spotifyApi";
-import { loginAction } from "../actions/authActions";
-import { setCurrentUserDetails } from "../actions/currentUserActions";
+import AlbumPage from "../components/AlbumPage";
+import ArtistPage from "../components/ArtistPage";
 
 export const history = createBrowserHistory();
 
@@ -71,6 +73,8 @@ class AppRouter extends Component {
                   <PrivateRoute path="/browse" component={BrowsePage} accessToken={this.props.auth.accessToken} />
                   <PrivateRoute path="/search" component={SearchPage} accessToken={this.props.auth.accessToken} />
                   <PrivateRoute path="/library" component={YourLibraryPage} accessToken={this.props.auth.accessToken} />
+                  <PrivateRoute path="/album" component={AlbumPage} accessToken={this.props.auth.accessToken} />
+                  <PrivateRoute path="/artist" component={ArtistPage} accessToken={this.props.auth.accessToken} />
                   <Route component={NotFoundPage} />
                 </Switch>
               </div>

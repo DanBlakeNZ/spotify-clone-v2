@@ -8,7 +8,7 @@ class BrowsePage extends Component {
     return (
       <div>
         <p>Welcome {this.props.user.displayName}</p>
-        <NewReleases accessToken={this.props.auth.accessToken} country={this.props.user.country} />
+        <NewReleases accessToken={this.props.accessToken} country={this.props.user.country} />
         <Link to="/">Home</Link>
       </div>
     );
@@ -17,8 +17,7 @@ class BrowsePage extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.currentUser,
-    auth: state.auth
+    user: state.currentUser
   };
 };
 

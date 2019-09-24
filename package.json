@@ -26,6 +26,7 @@
     "js-cookie": "^2.2.0",
     "normalize.css": "^8.0.1",
     "path": "^0.12.7",
+    "query-string": "^6.8.3",
     "querystring": "^0.2.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

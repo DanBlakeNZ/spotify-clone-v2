@@ -8,6 +8,7 @@ class NewReleases extends Component {
     this.state = {
       albums: []
     };
+    // TO-DO: store albums via redux to avoid reloading each time.
   }
 
   componentDidMount() {
@@ -25,10 +26,16 @@ class NewReleases extends Component {
             return (
               <MediaObject
                 key={album.id}
-                imageUrl={album.images[0].url}
-                title={album.name}
-                subtitle={album.artists[0].name}
                 type={album.type}
+                imageUrl={album.images[0].url}
+                imageId={album.id}
+                imageLink={`/album?albumId=${album.id}`}
+                title={album.name}
+                titleId={album.id}
+                titleLink={`/album?albumId=${album.id}`}
+                subtitle={album.artists[0].name}
+                subtitleId={album.artists[0].id}
+                subtitleLink={`/artist?artistId=${album.artists[0].id}`}
               />
             );
           })}

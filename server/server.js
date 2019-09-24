@@ -174,6 +174,26 @@ app.get("/api/browse/new-releases", (req, res) => {
   });
 });
 
+// GET LIST OF NEW RELEASES IN USERS COUNTRY
+app.get("/api/album", (req, res) => {
+  let accessToken = req.query.accessToken;
+  let albumId = req.query.albumId;
+  let authOptions = {
+    url: "https://api.spotify.com/v1/albums/" + albumId,
+    headers: {
+      Authorization: "Bearer " + accessToken
+    }
+  };
+
+  request.get(authOptions, (error, response, body) => {
+    if (!error && response.statusCode === 200) {
+      res.send(body);
+    } else {
+      console.log(error); //TODO: Handle this error
+    }
+  });
+});
+
 // ENSURE THIS IS ALWAYS LAST
 app.get("*", (req, res) => {
   res.sendFile(path.join(publicPath, "index.html"));
