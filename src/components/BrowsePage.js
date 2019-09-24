@@ -1,20 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-
-import { getNewReleases } from "../api/spotifyApi";
+import NewReleases from "./NewReleases";
 
 class BrowsePage extends Component {
-  componentDidMount() {
-    getNewReleases(this.props.auth.accessToken, this.props.user.country).then(data => {
-      console.log(data);
-    });
-  }
-
   render() {
     return (
       <div>
         <p>Welcome {this.props.user.displayName}</p>
+        <NewReleases accessToken={this.props.auth.accessToken} country={this.props.user.country} />
         <Link to="/">Home</Link>
       </div>
     );

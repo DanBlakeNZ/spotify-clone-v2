@@ -158,7 +158,6 @@ app.get("/api/me/playlists", (req, res) => {
 app.get("/api/browse/new-releases", (req, res) => {
   let accessToken = req.query.accessToken;
   let country = req.query.country;
-  console.log(country);
   let authOptions = {
     url: "https://api.spotify.com/v1/browse/new-releases?country=" + country,
     headers: {
