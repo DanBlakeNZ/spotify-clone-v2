@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import queryString from "query-string";
 import { getAlbum } from "../api/spotifyApi";
+import AlbumDetails from "./AlbumDetails";
 
 class AlbumPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
+      albumName: "",
       artists: [],
       release_date: "",
       total_tracks: "",
@@ -17,9 +18,8 @@ class AlbumPage extends Component {
     const parsed = queryString.parse(location.search);
     if (parsed.albumId) {
       getAlbum(this.props.accessToken, parsed.albumId).then(data => {
-        console.log(data);
         this.setState(() => ({
-          name: data.name,
+          albumName: data.name,
           artists: data.artists,
           release_date: data.release_date,
           total_tracks: data.total_tracks,
@@ -32,8 +32,8 @@ class AlbumPage extends Component {
 
   render() {
     return (
-      <div>
-        <p>{this.state.name}</p>
+      <div className="album-page-wrapper">
+        <AlbumDetails images={this.state.images} albumName={this.state.albumName} />
       </div>
     );
   }

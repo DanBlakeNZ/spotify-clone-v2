@@ -20,7 +20,7 @@ class NewReleases extends Component {
   render() {
     return (
       <div>
-        <p>New Releases</p>
+        <p>New Albums and Singles</p>
         <div>
           {this.state.albums.map(album => {
             return (
