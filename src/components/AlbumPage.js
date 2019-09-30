@@ -1,6 +1,9 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import queryString from "query-string";
+import * as Vibrant from "node-vibrant";
 import { getAlbum } from "../api/spotifyApi";
+import { setBackgroundColor } from "../actions/backgroundColorActions";
 import AlbumDetails from "./AlbumDetails";
 
 class AlbumPage extends Component {
@@ -31,6 +34,14 @@ class AlbumPage extends Component {
   }
 
   render() {
+    if (this.state.images[0]) {
+      Vibrant.from(`${this.state.images[0].url}`)
+        .getPalette()
+        .then(palette => {
+          this.props.setBackgroundColor(palette.LightVibrant.rgb);
+        });
+    }
+
     return (
       <div className="album-page-wrapper">
         <AlbumDetails images={this.state.images} albumName={this.state.albumName} />
@@ -39,4 +50,13 @@ class AlbumPage extends Component {
   }
 }
 
-export default AlbumPage;
+const mapDispatchToProps = dispatch => {
+  return {
+    setBackgroundColor: bgcolor => dispatch(setBackgroundColor(bgcolor))
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(AlbumPage);

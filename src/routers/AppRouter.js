@@ -59,6 +59,13 @@ class AppRouter extends Component {
   }
 
   render() {
+    // To fix, current causes render loop
+    // let backgroundStyle = {
+    //   backgroundImage: `linear-gradient(to right bottom, rgb(${this.props.background.bgcolor[0]}, ${
+    //     this.props.background.bgcolor[1]
+    //   }, ${this.props.background.bgcolor[2]}), rgb(0, 0, 0)), linear-gradient(transparent, rgb(0, 0, 0) 70%)`
+    // };
+
     return (
       <div>
         {this.state.loading ? (
@@ -66,7 +73,7 @@ class AppRouter extends Component {
         ) : (
           <Provider store={this.props.store}>
             <Router history={history}>
-              <div>
+              <div className="ABC" style={backgroundStyle}>
                 <Switch>
                   <Route path="/" component={LoginPage} exact={true} />
                   <Route path="/loginsuccess" component={LoginSuccess} />
@@ -96,7 +103,8 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
   return {
     auth: state.auth,
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    background: state.bgcolor
   };
 };
 
