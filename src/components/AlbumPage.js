@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import queryString from "query-string";
 import * as Vibrant from "node-vibrant";
+import { isEqual, sortBy } from "lodash";
 import { getAlbum } from "../api/spotifyApi";
 import { setBackgroundColor } from "../actions/backgroundColorActions";
 import AlbumDetails from "./AlbumDetails";
@@ -17,20 +18,29 @@ class AlbumPage extends Component {
       tracks: [],
       images: []
     };
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
 
     const parsed = queryString.parse(location.search);
     if (parsed.albumId) {
       getAlbum(this.props.accessToken, parsed.albumId).then(data => {
-        this.setState(() => ({
-          albumName: data.name,
-          artists: data.artists,
-          release_date: data.release_date,
-          total_tracks: data.total_tracks,
-          tracks: data.tracks,
-          images: data.images
-        }));
+        if (this._isMounted) {
+          this.setState(() => ({
+            albumName: data.name,
+            artists: data.artists,
+            release_date: data.release_date,
+            total_tracks: data.total_tracks,
+            tracks: data.tracks,
+            images: data.images
+          }));
+        }
       });
     }
+  }
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render() {
@@ -38,7 +48,9 @@ class AlbumPage extends Component {
       Vibrant.from(`${this.state.images[0].url}`)
         .getPalette()
         .then(palette => {
-          this.props.setBackgroundColor(palette.LightVibrant.rgb);
+          if (!isEqual(_.sortBy(palette.LightVibrant.rgb), sortBy(this.props.background.bgcolor))) {
+            this.props.setBackgroundColor(palette.LightVibrant.rgb);
+          }
         });
     }
 
@@ -56,7 +68,13 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+const mapStateToProps = state => {
+  return {
+    background: state.bgcolor
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(AlbumPage);

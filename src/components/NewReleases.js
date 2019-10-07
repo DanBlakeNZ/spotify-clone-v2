@@ -12,9 +12,16 @@ class NewReleases extends Component {
   }
 
   componentDidMount() {
+    this._isMounted = true;
     getNewReleases(this.props.accessToken, this.props.country).then(data => {
-      this.setState(() => ({ albums: data.albums.items }));
+      if (this._isMounted) {
+        this.setState(() => ({ albums: data.albums.items }));
+      }
     });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render() {
