@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import queryString from "query-string";
-import * as Vibrant from "node-vibrant";
-import { isEqual, sortBy } from "lodash";
+
+import updateBackgroundColor from "../functions/updateBackgroundColor";
 import { getAlbum } from "../api/spotifyApi";
 import { setBackgroundColor } from "../actions/backgroundColorActions";
 import AlbumDetails from "./AlbumDetails";
@@ -45,13 +45,11 @@ class AlbumPage extends Component {
 
   render() {
     if (this.state.images[0]) {
-      Vibrant.from(`${this.state.images[0].url}`)
-        .getPalette()
-        .then(palette => {
-          if (!isEqual(_.sortBy(palette.LightVibrant.rgb), sortBy(this.props.background.bgcolor))) {
-            this.props.setBackgroundColor(palette.LightVibrant.rgb);
-          }
-        });
+      updateBackgroundColor(
+        `${this.state.images[0].url}`,
+        this.props.background.bgcolor,
+        this.props.setBackgroundColor
+      );
     }
 
     return (

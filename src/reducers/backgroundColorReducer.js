@@ -1,5 +1,5 @@
 const initialState = {
-  bgcolor: [26, 86, 17] //RGB values
+  bgcolor: [0, 0, 0] //RGB values
 };
 
 export default (state = initialState, action) => {

@@ -60,9 +60,11 @@ class AppRouter extends Component {
 
   render() {
     let backgroundStyle = {
-      background: `linear-gradient(to right bottom, rgb(${this.props.background.bgcolor[0]}, ${
-        this.props.background.bgcolor[1]
-      }, ${this.props.background.bgcolor[2]}), rgb(0, 0, 0)), linear-gradient(transparent, rgb(0, 0, 0) 70%)`
+      background: `linear-gradient(to right bottom, rgba(
+        ${this.props.background.bgcolor[0]},
+        ${this.props.background.bgcolor[1]},
+        ${this.props.background.bgcolor[2]},
+        0.5), rgba(0, 0, 0, 0.7)), linear-gradient(transparent, rgba(0, 0, 0, 0.7) 70%)`
     };
 
     return (

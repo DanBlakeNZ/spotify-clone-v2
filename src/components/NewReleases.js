@@ -16,6 +16,7 @@ class NewReleases extends Component {
     getNewReleases(this.props.accessToken, this.props.country).then(data => {
       if (this._isMounted) {
         this.setState(() => ({ albums: data.albums.items }));
+        console.log(data.albums.items[0]);
       }
     });
   }
