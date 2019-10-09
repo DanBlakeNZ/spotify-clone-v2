@@ -64,7 +64,7 @@ class AppRouter extends Component {
         ${this.props.background.bgcolor[0]},
         ${this.props.background.bgcolor[1]},
         ${this.props.background.bgcolor[2]},
-        0.5), rgba(0, 0, 0, 0.7)), linear-gradient(transparent, rgba(0, 0, 0, 0.7) 70%)`
+        0.7), rgba(0, 0, 0, 0.7)), linear-gradient(transparent, rgba(0, 0, 0, 1) 70%)`
     };
 
     return (

@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import queryString from "query-string";
-
-import updateBackgroundColor from "../functions/updateBackgroundColor";
 import { getAlbum } from "../api/spotifyApi";
+import updateBackgroundColor from "../functions/updateBackgroundColor";
 import { setBackgroundColor } from "../actions/backgroundColorActions";
 import AlbumDetails from "./AlbumDetails";
 
@@ -16,7 +15,8 @@ class AlbumPage extends Component {
       release_date: "",
       total_tracks: "",
       tracks: [],
-      images: []
+      images: [],
+      backgroundUpdated: false
     };
   }
 
@@ -35,26 +35,40 @@ class AlbumPage extends Component {
             tracks: data.tracks,
             images: data.images
           }));
+
+          updateBackgroundColor(data.images[0].url, this.props.background.bgcolor, this.props.setBackgroundColor).then(
+            () => {
+              if (this._isMounted) {
+                this.setState(() => ({
+                  backgroundUpdated: true
+                }));
+              }
+            }
+          );
         }
       });
     }
   }
+
   componentWillUnmount() {
     this._isMounted = false;
   }
 
   render() {
-    if (this.state.images[0]) {
-      updateBackgroundColor(
-        `${this.state.images[0].url}`,
-        this.props.background.bgcolor,
-        this.props.setBackgroundColor
-      );
-    }
-
     return (
       <div className="album-page-wrapper">
-        <AlbumDetails images={this.state.images} albumName={this.state.albumName} />
+        {this.state.backgroundUpdated ? (
+          <AlbumDetails 
+            albumName={this.state.albumName}
+            artists={this.state.artists}
+            releaseDate={this.state.release_date}
+            totalTracks={this.state.total_tracks}
+            tracks={this.state.tracks}
+            images={this.state.images} 
+          />
+        ) : (
+          ""
+        )}
       </div>
     );
   }
